@@ -15,6 +15,8 @@ public class HealthBar : MonoBehaviour
     public float shakeStrength;
     public float healthUntilShake;
     private float shakeTimer = 0f;
+    private float currentShakeStrength = 0f;
+    public float transitionSpeed = 2f;
 
     void Start()
     {
@@ -27,18 +29,19 @@ public class HealthBar : MonoBehaviour
     void Update()
     {
         GetComponent<Image>().fillAmount = Mathf.Lerp(GetComponent<Image>().fillAmount, player.GetHealth() / player.maxHealth, snappiness * Time.deltaTime);
+        if (shakeTimer < shakeSpeed)
+        {
+            shakeTimer += Time.deltaTime;
+        }
+        else
+        {
+            shakeTimer = 0f;
+            rect.anchoredPosition = new Vector2(originalPos.x + Random.Range(-currentShakeStrength, currentShakeStrength), originalPos.y + Random.Range(-currentShakeStrength, currentShakeStrength));
+        }
         if (player.GetHealth() <= healthUntilShake)
         {
-            if (shakeTimer < shakeSpeed)
-            {
-                shakeTimer += Time.deltaTime;
-            }
-            else
-            {
-                shakeTimer = 0f;
-                rect.anchoredPosition = new Vector2(originalPos.x + Random.Range(-shakeStrength, shakeStrength), originalPos.y + Random.Range(-shakeStrength, shakeStrength));
-            }
+            currentShakeStrength = shakeStrength;
         }
-        else rect.anchoredPosition = originalPos;
+        else currentShakeStrength = Mathf.Lerp(currentShakeStrength, 0, transitionSpeed * Time.deltaTime);
     }
 }

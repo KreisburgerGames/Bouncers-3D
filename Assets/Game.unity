@@ -241,7 +241,8 @@ MonoBehaviour:
   snappiness: 5
   shakeSpeed: 0.04
   shakeStrength: 10
-  healthUntilShake: 20
+  healthUntilShake: 25
+  transitionSpeed: 3
 --- !u!114 &390832662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -589,10 +590,10 @@ MonoBehaviour:
     m_Bits: 64
   bounceSpeedMinMultiplier: 0.85
   bounceSpeedMaxMultiplier: 1.2
-  axisSpeedResetRange: 7.5
-  axisJumpMinMultiplier: 0.9
-  axisJumpMaxMultiplier: 1.3
-  deadAxisRange: 6
+  axisSpeedResetRange: 7.55
+  axisJumpMinMultiplier: 1.15
+  axisJumpMaxMultiplier: 1.55
+  deadAxisRange: 4.55
   axisJumpChance: 65
   axisResetChance: 45
   minMagnitude: 8
@@ -10895,7 +10896,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
