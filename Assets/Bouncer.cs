@@ -35,11 +35,14 @@ public class Bouncer : MonoBehaviour
     bool canBoostY = true;
     bool canBoostZ = true;
     private bool left, right, up, down, forward, backward = false;
+    private bool addScore = true;
+    private GameManager gm;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        gm = FindAnyObjectByType<GameManager>();
     }
 
     private void Update()
@@ -91,17 +94,23 @@ public class Bouncer : MonoBehaviour
             xAxisResetable = false; canBoostX = false;
             if (Physics.Raycast(transform.position, transform.right, bounceCheckRange, wall))
             {
-                if (!right)
+                rb.velocity = new Vector3(-1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier), rb.velocity.y, rb.velocity.z);
+                if (addScore && !right)
                 {
                     right = true;
-                    rb.velocity = new Vector3(-1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier), rb.velocity.y, rb.velocity.z);
                     Bounce();
+                    addScore = false;
                 }
             }
-            else if (!left)
+            else
             {
                 rb.velocity = new Vector3(1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier), rb.velocity.y, rb.velocity.z);
-                left = true; Bounce();
+                if (addScore && !left)
+                {
+                    left = true;
+                    Bounce();
+                    addScore = false;
+                }
             }
         }
         if (Physics.Raycast(transform.position, transform.up, bounceCheckRange, wall) || Physics.Raycast(transform.position, -transform.up, bounceCheckRange, wall))
@@ -109,17 +118,23 @@ public class Bouncer : MonoBehaviour
             yAxisResetable = false; canBoostY = false;
             if (Physics.Raycast(transform.position, transform.up, bounceCheckRange, wall))
             {
-                if (!up)
+                rb.velocity = new Vector3(rb.velocity.x, -1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier), rb.velocity.z);
+                if (addScore && !up)
                 {
                     up = true;
-                    rb.velocity = new Vector3(rb.velocity.x, -1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier), rb.velocity.z);
                     Bounce();
+                    addScore = false;
                 }
             }
-            else if (!down)
+            else
             {
                 rb.velocity = new Vector3(rb.velocity.x, 1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier), rb.velocity.z);
-                down = true; Bounce();
+                if (addScore && !down)
+                {
+                    down = true;
+                    Bounce();
+                    addScore = false;
+                }
             }
         }
         if (Physics.Raycast(transform.position, transform.forward, bounceCheckRange, wall) || Physics.Raycast(transform.position, -transform.forward, bounceCheckRange, wall))
@@ -127,19 +142,26 @@ public class Bouncer : MonoBehaviour
             zAxisResetable = false; canBoostZ = false;
             if (Physics.Raycast(transform.position, transform.forward, bounceCheckRange, wall))
             {
-                if (!forward)
+                rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier));
+                if (addScore && !forward)
                 {
                     forward = true;
-                    rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, -1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier));
                     Bounce();
+                    addScore = false;
                 }
             }
-            else if (!backward)
+            else
             {
                 rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, 1 * speed * Random.Range(axisJumpMinMultiplier, axisJumpMaxMultiplier));
-                backward = true; Bounce();
+                if (addScore && !backward)
+                {
+                    backward = true;
+                    Bounce();
+                    addScore = false;
+                }
             }
         }
+        addScore = true;
     }
 
     void CheckRepeats()
@@ -206,7 +228,10 @@ public class Bouncer : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, rb.velocity.y, Random.Range(-axisSpeedResetRange, axisSpeedResetRange));
         }
 
-        // Reminder: Add score here
+        if (addScore)
+        {
+            gm.score += 1;
+        }
 
         xAxisResetable = true;
         yAxisResetable = true;
