@@ -243,6 +243,8 @@ MonoBehaviour:
   shakeStrength: 10
   healthUntilShake: 25
   transitionSpeed: 3
+  fullHealthHue: 120
+  lowerHealthHue: 35
 --- !u!114 &390832662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.048744798, g: 1, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10270,6 +10272,9 @@ MonoBehaviour:
   fadeoutSpeed: 0.475
   shakeSpeed: 0.02
   shakeStrength: 5
+  vol: {fileID: 1823688469}
+  chromaticShakeSpeed: 0.02
+  chromaticShakeStrength: 0.377
 --- !u!114 &1049773841
 MonoBehaviour:
   m_ObjectHideFlags: 0

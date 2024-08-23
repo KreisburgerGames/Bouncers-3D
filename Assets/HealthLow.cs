@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.HighDefinition;
 
 public class HealthLow : MonoBehaviour
 {
@@ -20,6 +22,13 @@ public class HealthLow : MonoBehaviour
     private float shakeTimer = 0f;
     private Vector2 originalPos;
     private RectTransform rect;
+    public Volume vol;
+    private ChromaticAberration ca;
+    [Range(0.01f, 0.50f)]
+    public float chromaticShakeSpeed;
+    public float chromaticShakeStrength;
+    private float caStrengthTimer = 0f;
+    private float originalCA;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +36,8 @@ public class HealthLow : MonoBehaviour
         text = GetComponent<TMP_Text>();
         rect = GetComponent<RectTransform>();
         originalPos = rect.anchoredPosition;
+        vol.profile.TryGet<ChromaticAberration>(out ca);
+        originalCA = ca.intensity.value;
     }
     private void Awake()
     {
@@ -63,6 +74,15 @@ public class HealthLow : MonoBehaviour
                 shakeTimer = 0f;
                 rect.anchoredPosition = new Vector2(originalPos.x + Random.Range(-shakeStrength, shakeStrength), originalPos.y + Random.Range(-shakeStrength, shakeStrength));
             }
+            if (caStrengthTimer < chromaticShakeSpeed)
+            {
+                caStrengthTimer += Time.deltaTime;
+            }
+            else
+            {
+                caStrengthTimer = 0f;
+                ca.intensity.Override(originalCA + Random.Range(-chromaticShakeStrength, chromaticShakeStrength));
+            }
         }
         else
         {
@@ -72,6 +92,7 @@ public class HealthLow : MonoBehaviour
             text.color = color;
             fadeoutTimer = 0;
             colorChangeTimer = 0;
+            ca.intensity.Override(originalCA);
         }
     }
 }

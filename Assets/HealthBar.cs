@@ -17,6 +17,8 @@ public class HealthBar : MonoBehaviour
     private float shakeTimer = 0f;
     private float currentShakeStrength = 0f;
     public float transitionSpeed = 2f;
+    public float fullHealthHue = 120f;
+    public float lowerHealthHue = 35f;
 
     void Start()
     {
@@ -43,5 +45,7 @@ public class HealthBar : MonoBehaviour
             currentShakeStrength = shakeStrength;
         }
         else currentShakeStrength = Mathf.Lerp(currentShakeStrength, 0, transitionSpeed * Time.deltaTime);
+        float hue = ((fullHealthHue - lowerHealthHue) * GetComponent<Image>().fillAmount) + lowerHealthHue;
+        GetComponent<Image>().color = Color.HSVToRGB(hue / 360f, 1f, 1f); ;
     }
 }
