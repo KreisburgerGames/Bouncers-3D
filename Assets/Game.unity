@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33378163, g: 0.4999606, b: 0.83300793, a: 1}
+  m_IndirectSpecularColor: {r: 0.3329549, g: 0.49871927, b: 0.83300793, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10274,7 +10274,7 @@ MonoBehaviour:
   shakeStrength: 5
   vol: {fileID: 1823688469}
   chromaticShakeSpeed: 0.02
-  chromaticShakeStrength: 0.377
+  chromaticShakeStrength: 0.1575
 --- !u!114 &1049773841
 MonoBehaviour:
   m_ObjectHideFlags: 0

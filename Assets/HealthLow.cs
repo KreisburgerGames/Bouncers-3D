@@ -29,6 +29,7 @@ public class HealthLow : MonoBehaviour
     public float chromaticShakeStrength;
     private float caStrengthTimer = 0f;
     private float originalCA;
+    public float caRecoverySpeed = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -92,7 +93,7 @@ public class HealthLow : MonoBehaviour
             text.color = color;
             fadeoutTimer = 0;
             colorChangeTimer = 0;
-            ca.intensity.Override(originalCA);
+            ca.intensity.Override(Mathf.Lerp(ca.intensity.value, originalCA, caRecoverySpeed * Time.deltaTime));
         }
     }
 }
