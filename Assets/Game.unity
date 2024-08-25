@@ -10275,6 +10275,7 @@ MonoBehaviour:
   vol: {fileID: 1823688469}
   chromaticShakeSpeed: 0.02
   chromaticShakeStrength: 0.1575
+  caRecoverySpeed: 1
 --- !u!114 &1049773841
 MonoBehaviour:
   m_ObjectHideFlags: 0
