@@ -37,10 +37,26 @@ public class PlayerMovement : MonoBehaviour
     public float dashEnergyConsumption;
     public float dashForce;
 
+    public float edgeBounceForce;
+    public float edgeBounceMinDMG;
+    public float edgeBounceMaxDMG;
+
+    Player player;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        player = GetComponent<Player>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Wall")
+        {
+            rb.AddForce(collision.GetContact(0).normal * edgeBounceForce, ForceMode.Impulse);
+            player.ChangeHealthBy(Random.Range(edgeBounceMinDMG, edgeBounceMaxDMG));
+        }
     }
 
     void Update()
